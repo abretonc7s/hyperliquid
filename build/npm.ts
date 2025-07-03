@@ -23,7 +23,7 @@ await build({
     package: {
         name,
         version,
-        description: "Unofficial Hyperliquid API SDK for all major JS runtimes, written in TypeScript.",
+        description: "Unofficial Hyperliquid API SDK for all major JS runtimes, written in TypeScript. Fork with Node.js 20.18.0+ compatibility.",
         keywords: [
             "api",
             "library",
@@ -38,27 +38,31 @@ await build({
             "web3",
             "dex",
             "hyperliquid",
+            "node20",
+            "compatibility",
+            "fork",
         ],
         author: {
-            name: "nktkas",
-            email: "github.turk9@passmail.net",
-            url: "https://github.com/nktkas",
+            name: "deeeed",
+            email: "your-email@example.com",
+            url: "https://github.com/abretonc7s",
         },
-        homepage: "https://github.com/nktkas/hyperliquid",
+        homepage: "https://github.com/abretonc7s/hyperliquid",
         repository: {
             type: "git",
-            url: "git+https://github.com/nktkas/hyperliquid.git",
+            url: "git+https://github.com/abretonc7s/hyperliquid.git",
         },
         bugs: {
-            url: "https://github.com/nktkas/hyperliquid/issues",
+            url: "https://github.com/abretonc7s/hyperliquid/issues",
         },
         license: "MIT",
         engines: {
             /**
+             * - v20.18.0: Minimum version with required APIs
              * - v22.4.0: Native WebSocket support
-             * - v24.0.0: https://github.com/nktkas/hyperliquid/issues/34
+             * - v24.0.0: Promise.withResolvers, AbortSignal.timeout/any (polyfilled for compatibility)
              */
-            node: ">=24.0.0",
+            node: ">=20.18.0",
         },
         sideEffects: false,
     },

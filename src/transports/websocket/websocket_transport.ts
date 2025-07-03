@@ -7,6 +7,7 @@ import {
 } from "./_reconnecting_websocket.ts";
 import { HyperliquidEventTarget } from "./_hyperliquid_event_target.ts";
 import { WebSocketAsyncRequest } from "./_websocket_async_request.ts";
+import { abortTimeout, abortAny } from "../../polyfills.ts";
 
 export { type MessageBufferStrategy, ReconnectingWebSocketError, type ReconnectingWebSocketOptions };
 
@@ -157,9 +158,9 @@ export class WebSocketTransport implements IRequestTransport, ISubscriptionTrans
      */
     async request<T>(type: "info" | "exchange" | "explorer", payload: unknown, signal?: AbortSignal): Promise<T> {
         try {
-            const timeoutSignal = this.timeout ? AbortSignal.timeout(this.timeout) : undefined;
+            const timeoutSignal = this.timeout ? abortTimeout(this.timeout) : undefined;
             const combinedSignal = signal && timeoutSignal
-                ? AbortSignal.any([signal, timeoutSignal])
+                ? abortAny([signal, timeoutSignal])
                 : signal ?? timeoutSignal;
 
             return await this._wsRequester.request(
@@ -274,7 +275,7 @@ export class WebSocketTransport implements IRequestTransport, ISubscriptionTrans
     ready(signal?: AbortSignal): Promise<void> {
         return new Promise((resolve, reject) => {
             const combinedSignal = signal
-                ? AbortSignal.any([this.socket.reconnectAbortController.signal, signal])
+                ? abortAny([this.socket.reconnectAbortController.signal, signal])
                 : this.socket.reconnectAbortController.signal;
 
             if (combinedSignal.aborted) return reject(combinedSignal.reason);
@@ -332,7 +333,7 @@ export class WebSocketTransport implements IRequestTransport, ISubscriptionTrans
 
             // Check if the last request was sent more than the keep-alive interval ago
             if (Date.now() - this._wsRequester.lastRequestTime >= this.keepAlive.interval) {
-                const timeoutSignal = this.keepAlive.timeout ? AbortSignal.timeout(this.keepAlive.timeout) : undefined;
+                const timeoutSignal = this.keepAlive.timeout ? abortTimeout(this.keepAlive.timeout) : undefined;
                 await this._wsRequester.request("ping", timeoutSignal)
                     .catch(() => undefined); // Ignore errors
             }

@@ -1,5 +1,6 @@
 import type { MaybePromise } from "../../base.ts";
 import { type IRequestTransport, TransportError } from "../base.ts";
+import { abortTimeout, abortAny } from "../../polyfills.ts";
 
 /** Error thrown when an HTTP request fails. */
 export class HttpRequestError extends TransportError {
@@ -124,7 +125,7 @@ export class HttpTransport implements IRequestTransport, HttpTransportOptions {
                     },
                     keepalive: true,
                     method: "POST",
-                    signal: this.timeout ? AbortSignal.timeout(this.timeout) : undefined,
+                    signal: this.timeout ? abortTimeout(this.timeout) : undefined,
                 },
                 this.fetchOptions,
                 { signal },
@@ -199,7 +200,7 @@ function mergeRequestInit(...inits: RequestInit[]): RequestInit {
     const signals = inits.map((init) => init.signal)
         .filter((signal) => signal instanceof AbortSignal);
     if (signals.length > 0) {
-        merged.signal = signals.length > 1 ? AbortSignal.any(signals) : signals[0];
+        merged.signal = signals.length > 1 ? abortAny(signals) : signals[0];
     }
 
     return merged;

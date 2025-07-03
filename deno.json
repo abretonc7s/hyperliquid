@@ -1,6 +1,6 @@
 {
-    "name": "@nktkas/hyperliquid",
-    "version": "0.23.1",
+    "name": "@deeeed/hyperliquid-node20",
+    "version": "0.23.1-node20.1",
     "exports": {
         ".": "./mod.ts",
         "./types": "./src/types/mod.ts",

@@ -1,0 +1,12 @@
+# Build artifacts
+build/npm/
+
+# Tool versions (optional - depends on your preference)
+.tool-versions
+
+# Node modules if any
+node_modules/
+
+# Other common ignores
+*.log
+.DS_Store

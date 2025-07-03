@@ -1,9 +1,17 @@
-# Hyperliquid API TypeScript SDK
+# Hyperliquid API TypeScript SDK (Node.js 20+ Compatible Fork)
 
-[![npm](https://img.shields.io/npm/v/@nktkas/hyperliquid?style=flat-square&color=blue)](https://www.npmjs.com/package/@nktkas/hyperliquid)
-[![jsr](https://img.shields.io/jsr/v/@nktkas/hyperliquid?style=flat-square&color=blue)](https://jsr.io/@nktkas/hyperliquid)
-[![coveralls](https://img.shields.io/coverallsCoverage/github/nktkas/hyperliquid?style=flat-square)](https://coveralls.io/github/nktkas/hyperliquid)
-[![bundlephobia](https://img.shields.io/bundlephobia/minzip/@nktkas/hyperliquid?style=flat-square)](https://bundlephobia.com/package/@nktkas/hyperliquid)
+> **🍴 Fork Notice**: This is a fork of the excellent [`@nktkas/hyperliquid`](https://github.com/nktkas/hyperliquid) package by [nktkas](https://github.com/nktkas), modified to support Node.js 20.18.0+. All credit for the original implementation goes to the original author.
+> 
+> **Original Package**: [`@nktkas/hyperliquid`](https://www.npmjs.com/package/@nktkas/hyperliquid)  
+> **This Fork**: [`@deeeed/hyperliquid-node20`](https://www.npmjs.com/package/@deeeed/hyperliquid-node20)  
+> **Repository**: [github.com/abretonc7s/hyperliquid](https://github.com/abretonc7s/hyperliquid)
+> 
+> **Why this fork?** The original package requires Node.js ≥24.0.0 due to newer JavaScript features. This fork adds polyfills to support Node.js ≥20.18.0 while maintaining 100% API compatibility.
+> 
+> 📄 **See [FORK_CHANGES.md](./FORK_CHANGES.md) for detailed information about the modifications made.**
+
+[![npm](https://img.shields.io/npm/v/@deeeed/hyperliquid-node20?style=flat-square&color=blue)](https://www.npmjs.com/package/@deeeed/hyperliquid-node20)
+[![Node.js Compatibility](https://img.shields.io/badge/node-%3E%3D20.18.0-brightgreen?style=flat-square)](https://nodejs.org/)
 
 Unofficial [Hyperliquid API](https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/api) SDK for all major JS
 runtimes, written in TypeScript and provided with tests.
@@ -26,24 +34,26 @@ runtimes, written in TypeScript and provided with tests.
 ### Node.js (choose your package manager)
 
 ```
-npm i @nktkas/hyperliquid
+npm i @deeeed/hyperliquid-node20
 
-pnpm add @nktkas/hyperliquid
+pnpm add @deeeed/hyperliquid-node20
 
-yarn add @nktkas/hyperliquid
+yarn add @deeeed/hyperliquid-node20
 ```
+
+> **Migration from original**: Simply replace `@nktkas/hyperliquid` with `@deeeed/hyperliquid-node20` in your imports. All APIs are identical.
 
 ### Deno
 
 ```
-deno add jsr:@nktkas/hyperliquid
+deno add jsr:@deeeed/hyperliquid-node20
 ```
 
 ### Web
 
 ```html
 <script type="module">
-    import * as hl from "https://esm.sh/jsr/@nktkas/hyperliquid";
+    import * as hl from "https://esm.sh/jsr/@deeeed/hyperliquid-node20";
 </script>
 ```
 
@@ -100,7 +110,7 @@ if (!Promise.withResolvers) {
 #### Info endpoint
 
 ```ts
-import * as hl from "@nktkas/hyperliquid";
+import * as hl from "@deeeed/hyperliquid-node20";
 
 const transport = new hl.HttpTransport();
 const infoClient = new hl.InfoClient({ transport });
@@ -111,7 +121,7 @@ const openOrders = await infoClient.openOrders({ user: "0x..." });
 #### Exchange endpoint
 
 ```ts
-import * as hl from "@nktkas/hyperliquid";
+import * as hl from "@deeeed/hyperliquid-node20";
 
 const privateKey = "0x..."; // or `viem`, `ethers`
 
@@ -138,7 +148,7 @@ const result = await exchClient.order({
 #### Subscription
 
 ```ts
-import * as hl from "@nktkas/hyperliquid";
+import * as hl from "@deeeed/hyperliquid-node20";
 
 const transport = new hl.WebSocketTransport();
 const subsClient = new hl.SubscriptionClient({ transport });
@@ -153,7 +163,7 @@ await sub.unsubscribe(); // unsubscribe from the event
 #### Multi-Sign
 
 ```ts
-import * as hl from "@nktkas/hyperliquid";
+import * as hl from "@deeeed/hyperliquid-node20";
 
 const multiSignAddress = "0x...";
 const signers = [

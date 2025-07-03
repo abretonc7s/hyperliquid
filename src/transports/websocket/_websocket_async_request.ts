@@ -1,6 +1,7 @@
 import type { ReconnectingWebSocket } from "./_reconnecting_websocket.ts";
 import type { HyperliquidEventTarget } from "./_hyperliquid_event_target.ts";
 import { WebSocketRequestError } from "./websocket_transport.ts";
+import { withResolvers } from "../../polyfills.ts";
 
 interface PostRequest {
     method: "post";
@@ -154,7 +155,7 @@ export class WebSocketAsyncRequest {
         this.lastRequestTime = Date.now();
 
         // Wait for a response
-        const { promise, resolve, reject } = Promise.withResolvers<T>();
+        const { promise, resolve, reject } = withResolvers<T>();
         this.queue.push({ id, resolve, reject });
 
         const onAbort = () => reject(signal?.reason);
